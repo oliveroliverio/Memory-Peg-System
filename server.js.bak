@@ -1,10 +1,13 @@
 // server.js
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
+// Add middleware to parse JSON body
 app.use(express.json());
 
+// Example peg data: each entry has a date, peg, character, and associated display time.
+// (Fill in all 100 entries; here we list a few for illustration.)
 const pegs = [
     { date: "Jan 1", peg: "00", character: "tOOthless", time: "5:00 am" },
     { date: "Jan 2", peg: "01", character: "Oliver Arrow", time: "5:15 am" },
@@ -374,16 +377,7 @@ const pegs = [
 
 ];
 
-const dayColors = {
-    Sunday: "Red",
-    Monday: "White",
-    Tuesday: "Orange",
-    Wednesday: "Yellow",
-    Thursday: "Green",
-    Friday: "Blue",
-    Saturday: "Purple"
-};
-
+// Utility to compute the day-of-year (1-indexed)
 function getDayOfYear(date) {
     const start = new Date(date.getFullYear(), 0, 0);
     const diff = date - start;
@@ -391,139 +385,38 @@ function getDayOfYear(date) {
     return Math.floor(diff / oneDay);
 }
 
-function getWeekNumber(date) {
-    const start = new Date(date.getFullYear(), 0, 1);
-    const dayOfYear = Math.floor((date - start) / 86400000) + 1;
-    return Math.min(52, Math.ceil(dayOfYear / 7));
-}
-
-function getWeekCharacter(date) {
-    const weekNumber = getWeekNumber(date);
-    const pegEntry = pegs[weekNumber] || pegs[0];
-
-    return {
-        week: weekNumber,
-        peg: pegEntry.peg,
-        character: pegEntry.character,
-        note: "Week-based memory character"
-    };
-}
-
-function getDayColor(date) {
-    const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
-    return {
-        weekday,
-        color: dayColors[weekday],
-        note: "Color overlay for all characters and scenery today"
-    };
-}
-
+// Compute the peg index for the current time.
+// The time mapping is defined in 15-minute increments starting at 5:00 am.
+// We adjust for times before 5:00 am by adding 24 hours.
 function getTimePegIndex(date) {
     let totalMinutes = date.getHours() * 60 + date.getMinutes();
-
+    // 5:00 am is 300 minutes after midnight.
     if (totalMinutes < 300) {
-        totalMinutes += 1440;
+        totalMinutes += 1440; // add 24 hours in minutes
     }
-
     const minutesSinceFive = totalMinutes - 300;
+    // There are 96 intervals in 24 hours when using 15-minute increments.
     return Math.floor(minutesSinceFive / 15) % 96;
 }
 
-function getComputedTimeString(timePegIndex) {
-    const timeMinutes = 300 + (timePegIndex * 15);
-    const hours24 = Math.floor(timeMinutes / 60) % 24;
-    const minutes = timeMinutes % 60;
-    const period = hours24 >= 12 ? "pm" : "am";
-    const displayHour = ((hours24 + 11) % 12) + 1;
-    const displayMinutes = minutes.toString().padStart(2, "0");
-    return `${displayHour}:${displayMinutes} ${period}`;
-}
-
-function parseDateTimeInput(date, time) {
-    if (!date || !time) {
-        throw new Error("Missing required parameters");
-    }
-
-    const currentYear = new Date().getFullYear();
-    const [month, day] = date.split('-').map(num => parseInt(num, 10));
-
-    if (isNaN(month) || isNaN(day) || month < 1 || month > 12 || day < 1 || day > 31) {
-        throw new Error("Invalid date format");
-    }
-
-    let hours, minutes;
-    let timeStr = time.trim().toUpperCase();
-
-    if (timeStr.includes('AM') || timeStr.includes('PM')) {
-        const isPM = timeStr.includes('PM');
-        timeStr = timeStr.replace(/\s*(AM|PM)\s*$/i, '');
-
-        const timeParts = timeStr.split(':');
-        if (timeParts.length !== 2) throw new Error("Invalid time format");
-
-        hours = parseInt(timeParts[0], 10);
-        minutes = parseInt(timeParts[1], 10);
-
-        if (isNaN(hours) || isNaN(minutes) || hours < 1 || hours > 12 || minutes < 0 || minutes > 59) {
-            throw new Error("Invalid time values");
-        }
-
-        if (isPM && hours < 12) hours += 12;
-        else if (!isPM && hours === 12) hours = 0;
-    } else {
-        const timeParts = timeStr.split(':');
-        if (timeParts.length !== 2) throw new Error("Invalid time format");
-
-        hours = parseInt(timeParts[0], 10);
-        minutes = parseInt(timeParts[1], 10);
-
-        if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-            throw new Error("Invalid time values");
-        }
-    }
-
-    return new Date(currentYear, month - 1, day, hours, minutes);
-}
-
-function buildCharacterResponse(dateObj) {
-    const weekCharacter = getWeekCharacter(dateObj);
-    const dayColor = getDayColor(dateObj);
-
-    const timePegIndex = getTimePegIndex(dateObj);
-    const timeCharacter = pegs[timePegIndex];
-    const computedTimeStr = getComputedTimeString(timePegIndex);
-
-    return {
-        weekCharacter,
-        dayColor,
-        timeCharacter: {
-            peg: timeCharacter.peg,
-            character: timeCharacter.character,
-            time: timeCharacter.time,
-            note: "15-minute quadrant character"
-        },
-        computedTime: computedTimeStr,
-        currentDate: dateObj.toISOString()
-    };
-}
-
+// Root route to provide API information
 app.get('/', (req, res) => {
     res.json({
         name: "Number System API",
-        description: "API for retrieving week character, day color, and time quadrant character",
+        description: "API for retrieving day and time characters based on the current date and time",
         endpoints: [
             {
                 path: "/getCharacters",
                 method: "GET",
-                description: "Get current week character, day color, and time quadrant character"
+                description: "Get characters based on current day and time"
             },
             {
                 path: "/getCharactersByDate",
                 method: "POST",
-                description: "Get week character, day color, and time character by date/time",
+                description: "Get characters based on provided date and time",
                 body: {
-                    date: "MM-DD",
-                    time: "HH:MM or HH:MM AM/PM"
+                    date: "MM-DD (e.g., 04-15)",
+                    time: "HH:MM (24-hour format) or HH:MM AM/PM (12-hour format)"
                 }
             }
         ]
@@ -532,43 +425,182 @@ app.get('/', (req, res) => {
 
 app.get('/getCharacters', (req, res) => {
     const now = new Date();
-    res.json(buildCharacterResponse(now));
+
+    // Determine the day character:
+    // Compute the day-of-year (1-indexed), subtract 1 to make it zero-indexed,
+    // and use modulo 100 to cycle through our 100 pegs.
+    const dayOfYear = getDayOfYear(now);
+    const dayPegIndex = (dayOfYear - 1) % 100;
+    const dayCharacter = pegs[dayPegIndex];
+
+    // Determine the time character:
+    const timePegIndex = getTimePegIndex(now);
+    // For the time mapping, we use the first 96 pegs.
+    const timeCharacter = pegs[timePegIndex];
+
+    // (Optional) Compute a formatted time string based on the interval:
+    const timeMinutes = 300 + (timePegIndex * 15);
+    const hours24 = Math.floor(timeMinutes / 60) % 24;
+    const minutes = timeMinutes % 60;
+    const period = hours24 >= 12 ? "pm" : "am";
+    const displayHour = ((hours24 + 11) % 12) + 1;
+    const displayMinutes = minutes.toString().padStart(2, '0');
+    const computedTimeStr = `${displayHour}:${displayMinutes} ${period}`;
+
+    res.json({
+        dayCharacter: {
+            peg: dayCharacter.peg,
+            character: dayCharacter.character,
+            note: "Mature, academic, mentor style"
+        },
+        timeCharacter: {
+            peg: timeCharacter.peg,
+            character: timeCharacter.character,
+            time: timeCharacter.time,
+            note: "Youthful, easy-going, student style"
+        },
+        computedTime: computedTimeStr,
+        currentDate: now.toISOString()
+    });
 });
 
+// POST endpoint to get characters by specific date and time
 app.post('/getCharactersByDate', (req, res) => {
     try {
         const { date, time } = req.body;
-        const dateObj = parseDateTimeInput(date, time);
-
-        const response = buildCharacterResponse(dateObj);
-
+        
+        if (!date || !time) {
+            return res.status(400).json({ 
+                error: "Missing required parameters", 
+                required: { date: "MM-DD", time: "HH:MM or HH:MM AM/PM" } 
+            });
+        }
+        
+        // Parse the date (year doesn't matter, use current year)
+        const currentYear = new Date().getFullYear();
+        const [month, day] = date.split('-').map(num => parseInt(num, 10));
+        
+        // Validate date inputs
+        if (isNaN(month) || isNaN(day) || month < 1 || month > 12 || day < 1 || day > 31) {
+            return res.status(400).json({ 
+                error: "Invalid date format", 
+                required: { date: "MM-DD" } 
+            });
+        }
+        
+        // Parse the time (handle both 24-hour and AM/PM formats)
+        let hours, minutes;
+        let timeStr = time.trim().toUpperCase();
+        
+        // Check if time is in AM/PM format
+        if (timeStr.includes('AM') || timeStr.includes('PM')) {
+            const isPM = timeStr.includes('PM');
+            // Remove AM/PM and any spaces
+            timeStr = timeStr.replace(/\s*(AM|PM)\s*$/i, '');
+            
+            const timeParts = timeStr.split(':');
+            if (timeParts.length !== 2) {
+                return res.status(400).json({ 
+                    error: "Invalid time format", 
+                    required: { time: "HH:MM AM/PM" } 
+                });
+            }
+            
+            hours = parseInt(timeParts[0], 10);
+            minutes = parseInt(timeParts[1], 10);
+            
+            // Validate time values for 12-hour format
+            if (isNaN(hours) || isNaN(minutes) || hours < 1 || hours > 12 || minutes < 0 || minutes > 59) {
+                return res.status(400).json({ 
+                    error: "Invalid time values", 
+                    required: { time: "Hours (1-12), Minutes (0-59)" } 
+                });
+            }
+            
+            // Convert to 24-hour format
+            if (isPM && hours < 12) {
+                hours += 12;
+            } else if (!isPM && hours === 12) {
+                hours = 0;
+            }
+        } else {
+            // Assume 24-hour format
+            const timeParts = timeStr.split(':');
+            if (timeParts.length !== 2) {
+                return res.status(400).json({ 
+                    error: "Invalid time format", 
+                    required: { time: "HH:MM" } 
+                });
+            }
+            
+            hours = parseInt(timeParts[0], 10);
+            minutes = parseInt(timeParts[1], 10);
+            
+            // Validate time values for 24-hour format
+            if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+                return res.status(400).json({ 
+                    error: "Invalid time values", 
+                    required: { time: "Hours (0-23), Minutes (0-59)" } 
+                });
+            }
+        }
+        
+        // Create date object (month is 0-indexed in JavaScript Date)
+        const dateObj = new Date(currentYear, month - 1, day, hours, minutes);
+        
+        // Determine the day character
+        const dayOfYear = getDayOfYear(dateObj);
+        const dayPegIndex = (dayOfYear - 1) % 100;
+        const dayCharacter = pegs[dayPegIndex];
+        
+        // Determine the time character
+        const timePegIndex = getTimePegIndex(dateObj);
+        const timeCharacter = pegs[timePegIndex];
+        
+        // Format time for display
+        const timeMinutes = 300 + (timePegIndex * 15);
+        const hours24 = Math.floor(timeMinutes / 60) % 24;
+        const mins = timeMinutes % 60;
+        const period = hours24 >= 12 ? "pm" : "am";
+        const displayHour = ((hours24 + 11) % 12) + 1;
+        const displayMinutes = mins.toString().padStart(2, '0');
+        const computedTimeStr = `${displayHour}:${displayMinutes} ${period}`;
+        
+        // Format input time for display
+        const inputPeriod = hours >= 12 ? "PM" : "AM";
+        const inputHour = hours % 12 === 0 ? 12 : hours % 12;
+        const inputMinutesStr = minutes.toString().padStart(2, '0');
+        const formattedInputTime = `${inputHour}:${inputMinutesStr} ${inputPeriod}`;
+        
         res.json({
-            inputDate: date,
-            inputTime: time,
-            ...response
+            inputDate: `${month}-${day}`,
+            inputTime: formattedInputTime,
+            dayCharacter: {
+                peg: dayCharacter.peg,
+                character: dayCharacter.character,
+                note: "Character based on day of year"
+            },
+            timeCharacter: {
+                peg: timeCharacter.peg,
+                character: timeCharacter.character,
+                time: timeCharacter.time,
+                note: "Character based on time of day"
+            },
+            computedTime: computedTimeStr
         });
     } catch (error) {
-        res.status(400).json({
-            error: error.message,
-            required: {
-                date: "MM-DD",
-                time: "HH:MM or HH:MM AM/PM"
-            }
-        });
+        console.error('Error processing request:', error);
+        res.status(500).json({ error: "Internal server error" });
     }
 });
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`API server is listening at http://0.0.0.0:${port}`);
+app.listen(port, () => {
+    console.log(`API server is listening at http://localhost:${port}`);
 });
 
+// Export for testing
 module.exports = {
     pegs,
-    dayColors,
     getDayOfYear,
-    getWeekNumber,
-    getWeekCharacter,
-    getDayColor,
-    getTimePegIndex,
-    buildCharacterResponse
+    getTimePegIndex
 };
