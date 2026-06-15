@@ -142,9 +142,16 @@ const dayThemes = {
 };
 
 function getWeekNumber(date) {
-    const start = new Date(date.getFullYear(), 0, 1);
-    const dayOfYear = Math.floor((date - start) / 86400000) + 1;
-    return Math.min(52, Math.ceil(dayOfYear / 7));
+    const target = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+
+    // ISO week starts Monday. Thursday determines the ISO year/week.
+    const dayNumber = target.getUTCDay() || 7;
+    target.setUTCDate(target.getUTCDate() + 4 - dayNumber);
+
+    const yearStart = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
+    const weekNumber = Math.ceil((((target - yearStart) / 86400000) + 1) / 7);
+
+    return weekNumber;
 }
 
 function getWeekCharacter(date) {
