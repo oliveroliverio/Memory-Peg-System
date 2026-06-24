@@ -141,6 +141,293 @@ const dayThemes = {
     }
 };
 
+
+const week_creatures = [
+    // ==========================================
+    // ARC 1: GREEK CREATURES (Weeks 1–10)
+    // ==========================================
+    {
+        week: "01",
+        creature: "Pegasus",
+        creature_description: "A magnificent winged horse with pure white feathers and hooves that glow with celestial light. This divine entity soars high in the heavens, watching over the skies to protect the lands below from harm. Its majestic presence brings hope and safety to all who look up."
+    },
+    {
+        week: "02",
+        creature: "Centaur",
+        creature_description: "A noble creature with the upper body of a human and the lower body of a powerful horse. Serving as a guardian spirit of the ancient woods, this wise entity patrols the forest boundaries, watching over the flora and fauna as if to protect them from invaders. Its sharp eyes and steady bow ensure the sanctuary remains undisturbed."
+    },
+    {
+        week: "03",
+        creature: "Cerberus",
+        creature_description: "A colossal, three-headed hound with eyes like burning coals and a mane of writhing serpents. This fearsome entity stands sentinel at the gates of the underworld, watching over the threshold to protect the boundary between life and death. Its terrifying presence ensures that no soul escapes and no living being enters uninvited."
+    },
+    {
+        week: "04",
+        creature: "Minotaur",
+        creature_description: "A massive, powerful entity with the muscular body of a man and the head of a fierce bull. Wandering the shifting corridors of the great labyrinth, this guardian entity watches over the deep chambers as if to protect its secrets from intruders. Its heavy hooves and resonant snorts echo through the darkness, keeping the maze safe."
+    },
+    {
+        week: "05",
+        creature: "Hydra",
+        creature_description: "A terrifying, multi-headed water serpent whose breath is poisonous and whose severed heads immediately regrow. This primordial entity dwells within the murky depths of the swamp, watching over the dark waters as if to protect its ancient territory. Its many eyes scan the misty horizon, ensuring no trespassers cross its swampy domain."
+    },
+    {
+        week: "06",
+        creature: "Satyr",
+        creature_description: "A playful yet powerful goat-man with curved horns and nimble hooves, playing a wooden pan flute. This woodland deity dances through the sunlit groves, watching over the wild groves and keeping them safe from harm. Its enchanting music brings life to the trees and keeps destructive forces at bay."
+    },
+    {
+        week: "07",
+        creature: "Harpy",
+        creature_description: "A fierce creature with the wings and claws of a giant bird and the sharp features of a human. This avian entity patrols the stormy mountain peaks, watching over the high winds as if to protect the skies from unwanted travelers. Its piercing shrieks warn intruders that the heavens are fiercely guarded."
+    },
+    {
+        week: "08",
+        creature: "Chimera",
+        creature_description: "A hybrid beast breathing fire, featuring the head of a lion, the body of a goat, and a venomous snake for a tail. This mythical entity guards the volcanic highlands, watching over the fiery crags as if to protect the ancient earth. Its roaring breath keeps all who would disturb the mountains at a distance."
+    },
+    {
+        week: "09",
+        creature: "Siren",
+        creature_description: "A beautiful sea enchantress with shimmering wings, perched on a rocky cliffside above crashing waves. This mystical entity sings haunting melodies that echo across the sea, watching over the ocean depths as if to protect its aquatic kingdom. Her beautiful voice guides lost sailors away from dangerous reefs while keeping invaders out."
+    },
+    {
+        week: "10",
+        creature: "Cyclops",
+        creature_description: "A towering, one-eyed giant of immense strength, standing before a smoky forge built into a volcano. This ancient blacksmith entity watches over the subterranean caverns, protecting the divine forge and the weapons of the gods. His singular, burning eye keeps constant vigil over the glowing magma."
+    },
+
+    // ==========================================
+    // ARC 2: MONSTERS & GUARDIANS (Weeks 11–20)
+    // ==========================================
+    {
+        week: "11",
+        creature: "Sphinx",
+        creature_description: "A majestic creature with the body of a lion and the wings and head of a human. Perched atop a sun-drenched dune, this riddle-weaving entity watches over the desert sands to protect the sacred tombs. Its intense gaze and analytical mind challenge all who seek to uncover the mysteries of the ancient ruins."
+    },
+    {
+        week: "12",
+        creature: "Griffin",
+        creature_description: "A majestic beast with the body of a lion and the head and wings of a giant eagle. This noble guardian entity nests on the highest mountain tops, watching over the valley below to protect the gold and treasures of the earth. Its keen eyesight and powerful wings allow it to defend its sanctuary from any threat."
+    },
+    {
+        week: "13",
+        creature: "Basilisk",
+        creature_description: "A legendary king of serpents, marked by a crown-like crest and a deadly gaze that can turn stone to dust. This lethal entity crawls through the deep caverns, watching over the subterranean world as if to protect its dark secrets. Its presence establishes an absolute domain, keeping the underworld secure."
+    },
+    {
+        week: "14",
+        creature: "Cockatrice",
+        creature_description: "A bizarre beast with the head of a rooster and the wings and tail of a scaly dragon. This strange entity guards the desolate badlands, watching over the rocky terrain as if to protect the balance of the desert. Its petrifying gaze stops any potential threat in its tracks, keeping the wilderness safe."
+    },
+    {
+        week: "15",
+        creature: "Manticore",
+        creature_description: "A terrifying hybrid with the body of a red lion, the face of a human, and a scorpion's stinger tail. This formidable entity rules the jagged canyons, watching over the rocky passes as if to protect the territory from outside forces. Its lethal tail and sharp claws stand ready to defend the rugged landscape."
+    },
+    {
+        week: "16",
+        creature: "Golem",
+        creature_description: "A giant animated defender crafted from solid stone and clay, inscribed with ancient runes of power. This stoic entity stands motionless at the gates of the sanctuary, watching over the citizens to protect them from external threats. It only moves when danger approaches, using its massive strength to shield the innocent."
+    },
+    {
+        week: "17",
+        creature: "Lamassu",
+        creature_description: "A divine protector with the body of a winged bull and the crowned head of a human. Standing at the city gates, this celestial entity watches over the kingdom to protect it from malevolent spirits. Its serene expression and giant wings project a shield of absolute safety over the civilization."
+    },
+    {
+        week: "18",
+        creature: "Anzu",
+        creature_description: "A massive storm bird with the head of a lion, capable of breathing fire and summoning hurricanes with its wings. This Mesopotamian storm entity watches over the high clouds to protect the heavens and the cosmic order. Its thundering cries echo across the sky, reminding all of its supreme power."
+    },
+    {
+        week: "19",
+        creature: "Roc",
+        creature_description: "A giant bird of prey so immense that its wingspan can blot out the sun. This colossal avian entity nests in the highest mountain ranges, watching over the skies and valleys to protect the natural ecosystem. Its powerful shadow brings awe and guards the wilderness from destructive forces."
+    },
+    {
+        week: "20",
+        creature: "Kraken",
+        creature_description: "A colossal sea monster with massive tentacles, dwelling in the dark abyss of the ocean. This ancient leviathan watches over the deep ocean trenches to protect the secrets of the sea. Its rising form warns ships to respect the power of the ocean, keeping the deep waters undisturbed."
+    },
+
+    // ==========================================
+    // ARC 3: BIRDS & BEASTS (Weeks 21–30)
+    // ==========================================
+    {
+        week: "21",
+        creature: "Phoenix",
+        creature_description: "A legendary bird of flame and golden feathers, symbolizing eternal rebirth. This radiant entity nests in the sunlit peaks, watching over the valleys as if to protect the cycle of life and renewal. Its fiery warmth heals the sick and drives away shadows from the land."
+    },
+    {
+        week: "22",
+        creature: "Thunderbird",
+        creature_description: "A mythical storm bird that creates thunder by flapping its wings and shoots lightning from its eyes. This powerful weather deity watches over the plains, protecting the land by bringing life-giving rain. Its flashing eyes ward off malevolent forces from the sky."
+    },
+    {
+        week: "23",
+        creature: "Unicorn",
+        creature_description: "A pure white horse with a single spiral horn glowing with soft, magical light. This gentle entity walks through the deepest forests, watching over the streams and trees to protect the purity of nature. Its healing touch cleanses the waters and shields the woods from decay."
+    },
+    {
+        week: "24",
+        creature: "Bigfoot",
+        creature_description: "A massive, hairy forest beast that walks silently among the giant redwoods. This elusive entity watches over the deep wilderness, protecting the ancient forests from human destruction. Its quiet presence blends into the trees, guarding the secrets of the wild."
+    },
+    {
+        week: "25",
+        creature: "Yeti",
+        creature_description: "A large snow beast covered in white fur, adapted to the freezing temperatures of the high peaks. This ancient entity watches over the snow-covered mountains, protecting the alpine ecosystem from harm. Its heavy footsteps warn travelers to treat the icy wilderness with respect."
+    },
+    {
+        week: "26",
+        creature: "Loch Ness Monster",
+        creature_description: "A mysterious, long-necked lake beast swimming gracefully through deep, dark waters. This ancient aquatic entity watches over the misty lake, protecting the underwater caves and their long-forgotten secrets. Its silent movements keep the lake peaceful and protected."
+    },
+    {
+        week: "27",
+        creature: "Selkie",
+        creature_description: "A gentle seal-human creature that shed its skin to walk on the sandy shores. This ocean-born entity watches over the coastal waters, protecting the sea life and the beaches from harm. Its dual nature bridges the land and sea, keeping both in harmony."
+    },
+    {
+        week: "28",
+        creature: "Mermaid",
+        creature_description: "A beautiful sea creature with a shimmering fish tail, swimming among colorful coral reefs. This aquatic entity watches over the marine kingdom, protecting the fish and ocean life from danger. Her soothing voice calls out to protect the oceans from being harmed."
+    },
+    {
+        week: "29",
+        creature: "Kelpie",
+        creature_description: "A magical water horse that lures travelers to ride before dragging them into the depths. This powerful entity watches over the rivers and lochs, protecting the freshwater channels from invaders. Its wild form serves as a warning, keeping the waterways clean and safe."
+    },
+    {
+        week: "30",
+        creature: "Dragon",
+        creature_description: "A massive, scaled dragon breathing golden fire, sitting atop a mountain of treasure. This king of beasts watches over the realm from the highest peaks, acting as a god-like guardian to protect the land. Its immense power and wise eyes keep all threats far away."
+    },
+
+    // ==========================================
+    // ARC 4: ASIAN MYTHOLOGY (Weeks 31–40)
+    // ==========================================
+    {
+        week: "31",
+        creature: "Naga",
+        creature_description: "A divine serpent deity with multiple snake hoods, rising from the sacred waters. This powerful entity watches over the rivers and temple gates, protecting the spiritual balance of the land. Its coils shield the sacred springs from being polluted."
+    },
+    {
+        week: "32",
+        creature: "Garuda",
+        creature_description: "A divine eagle with golden wings and a human torso, soaring through the heavens. This celestial bird deity watches over the skies, protecting the righteous from evil forces and serpents. Its powerful wings generate winds that sweep away negative energies."
+    },
+    {
+        week: "33",
+        creature: "Rakshasa",
+        creature_description: "A powerful demon entity with shapeshifting abilities and fierce eyes. This ancient guardian watches over the dark forests, protecting the borders of the spiritual realm. Its formidable presence ensures that the balance between worlds is never broken."
+    },
+    {
+        week: "34",
+        creature: "Qilin",
+        creature_description: "An auspicious beast with scales, antlers, and a body wrapped in holy flames. This gentle deity walks on grass without crushing a single blade, watching over the peaceful valleys to protect them from war. Its presence brings prosperity and safety to the righteous."
+    },
+    {
+        week: "35",
+        creature: "Chinese Dragon",
+        creature_description: "A majestic, serpentine dragon flying through the clouds without wings. This Eastern deity watches over the weather and agriculture, protecting the farmlands by bringing rain. Its benevolent gaze brings harmony to the entire empire."
+    },
+    {
+        week: "36",
+        creature: "Jiangshi",
+        creature_description: "A hopping vampire dressed in ancient robes, moving through the night with outstretched arms. This supernatural entity watches over the old burial grounds, protecting the resting places of ancestors from grave robbers. Its stiff posture and talisman keep the cemetery quiet."
+    },
+    {
+        week: "37",
+        creature: "Kitsune",
+        creature_description: "A mythical nine-tailed fox spirit with glowing tails and wise, ancient eyes. This powerful kitsune entity watches over the sacred shrines, protecting the boundary between spirits and humans. Its mystical illusions keep unwanted intruders from desecrating the sanctuary."
+    },
+    {
+        week: "38",
+        creature: "Tanuki",
+        creature_description: "A magical shapeshifting raccoon dog with a big belly and a straw hat. This mischievous entity watches over the mountain paths, protecting the forests and travelers from danger. Its shape-shifting tricks keep the woods safe from harm."
+    },
+    {
+        week: "39",
+        creature: "Kappa",
+        creature_description: "A river yokai with a shell and a water-filled depression on its head. This aquatic entity watches over the flowing rivers, protecting the local fish and riverbeds. Its presence ensures that the community respects the life of the river."
+    },
+    {
+        week: "40",
+        creature: "Tengu",
+        creature_description: "A crow spirit with black wings and a long nose, carrying a magical fan. This proud mountain entity watches over the high forests, protecting the trees from greedy loggers. Its swift flight and wind magic keep the mountains pure."
+    },
+
+    // ==========================================
+    // ARC 5: DARK / SUPERNATURAL (Weeks 41–50)
+    // ==========================================
+    {
+        week: "41",
+        creature: "Ghost",
+        creature_description: "A glowing, ethereal spirit floating silently through the halls of an ancient castle. This spectral entity watches over the historic ruins, protecting the memories and history of the past. Its haunting presence keeps the ancient walls safe from destruction."
+    },
+    {
+        week: "42",
+        creature: "Vampire",
+        creature_description: "A noble, pale vampire standing on a high balcony, wrapped in a velvet cloak. This immortal entity watches over the dark valleys, protecting the night domain from chaos. Its sharp senses and commanding presence keep the shadows in perfect order."
+    },
+    {
+        week: "43",
+        creature: "Werewolf",
+        creature_description: "A powerful beast howling under the full moon, with thick fur and sharp claws. This lupine entity watches over the wild woodlands, protecting the territory from intruders. Its fierce strength and loyalty to the pack keep the forests safe."
+    },
+    {
+        week: "44",
+        creature: "Zombie",
+        creature_description: "A tireless, undead guardian walking through the overgrown graveyard. This ancient entity watches over the silent tombs, protecting the sanctuary of the dead from intruders. Its relentless presence ensures that the cemetery remains undisturbed."
+    },
+    {
+        week: "45",
+        creature: "Banshee",
+        creature_description: "A sorrowful spirit with flowing hair, wailing under the starlit sky. This mystical entity watches over the family line, protecting their legacy and warning of danger. Her chilling cry acts as a shield to prepare the household for what is to come."
+    },
+    {
+        week: "46",
+        creature: "Djinn",
+        creature_description: "A powerful spirit of fire and wind, rising from a brass lamp in a swirl of smoke. This ancient entity watches over the desert sands, protecting the hidden treasures and secrets of the dunes. Its magical power keeps the desert balance intact."
+    },
+    {
+        week: "47",
+        creature: "Ifrit",
+        creature_description: "A massive demon of pure fire, with glowing horns and skin made of lava. This fiery entity watches over the volcanic caves, protecting the deep fires of the earth. Its intense heat deters any who would try to steal the planet's core energy."
+    },
+    {
+        week: "48",
+        creature: "Oni",
+        creature_description: "A fierce demon with red skin, horns, and a giant iron club. This powerful entity watches over the mountain gates, protecting the paths from malevolent invaders. Its terrifying strength keeps the mountain passes secure."
+    },
+    {
+        week: "49",
+        creature: "Jorogumo",
+        creature_description: "A spider spirit that can transform into a beautiful woman, weaving golden webs. This cunning entity watches over the misty waterfalls, protecting the secluded valley from intruders. Her webs act as a natural barrier to keep the environment safe."
+    },
+    {
+        week: "50",
+        creature: "Frost Giant",
+        creature_description: "A colossal giant made of ice and snow, holding a frosted war club. This ancient entity watches over the frozen north, protecting the glaciers from melting. Its freezing breath keeps the arctic lands safe from warm winds."
+    },
+
+    // ==========================================
+    // ARC 6: RAGNAROK FINALE (Weeks 51–52)
+    // ==========================================
+    {
+        week: "51",
+        creature: "Jormungandr",
+        creature_description: "The massive World Serpent, coiled around the entire ocean floor and biting its own tail. This titanic entity watches over the deep oceans, protecting the structural integrity of the world. Its steady coils keep the seas from swallowing the lands."
+    },
+    {
+        week: "52",
+        creature: "Fenrir",
+        creature_description: "A colossal, legendary wolf with eyes like fire and jaws that can reach the heavens. This god-like entity watches over the icy wilderness, protecting the wild packs from external threats. Its wild strength stands as a guardian of the natural order."
+    }
+];
+
 function getWeekNumber(date) {
     const target = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
 
@@ -154,15 +441,18 @@ function getWeekNumber(date) {
     return weekNumber;
 }
 
-function getWeekCharacter(date) {
+
+
+function getWeekCreature(date) {
     const weekNumber = getWeekNumber(date);
-    const pegEntry = pegs[weekNumber] || pegs[0];
+    const creatureEntry = week_creatures[weekNumber - 1] || week_creatures[0];
 
     return {
         week: weekNumber,
-        peg: pegEntry.peg,
-        character: pegEntry.character,
-        note: "Week-based memory character"
+        weekFormatted: String(weekNumber).padStart(2, "0"),
+        creature: creatureEntry.creature,
+        creature_description: creatureEntry.creature_description,
+        note: "Week-based mythical creature"
     };
 }
 
@@ -247,7 +537,7 @@ function parseDateTimeInput(date, time) {
 }
 
 function buildCharacterResponse(dateObj) {
-    const weekCharacter = getWeekCharacter(dateObj);
+    const weekCreature = getWeekCreature(dateObj);
     const dayTheme = getDayTheme(dateObj);
 
     const timePegIndex = getTimePegIndex(dateObj);
@@ -255,7 +545,7 @@ function buildCharacterResponse(dateObj) {
     const computedTimeStr = getComputedTimeString(timePegIndex);
 
     return {
-        weekCharacter,
+        weekCreature,
         dayTheme,
         timeCharacter: {
             peg: timeCharacter.peg,
@@ -317,15 +607,18 @@ app.post('/getCharactersByDate', (req, res) => {
     }
 });
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`API server is listening at http://0.0.0.0:${port}`);
-});
+if (require.main === module) {
+    app.listen(port, '0.0.0.0', () => {
+        console.log(`API server is listening at http://0.0.0.0:${port}`);
+    });
+}
 
 module.exports = {
+    app,
     pegs,
     dayThemes,
     getWeekNumber,
-    getWeekCharacter,
+    getWeekCreature,
     getDayTheme,
     getTimePegIndex,
     getComputedTimeString,

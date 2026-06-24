@@ -53,3 +53,28 @@ This enhancement allows users to look up day and time characters for any specifi
 
 ### Reason for Changes:
 These changes were made to ensure the Number System API is properly tested and can be deployed reliably. The unit tests verify that the API returns the expected data structure and that the helper functions work correctly for different dates and times.
+
+## 2026-06-24: Add creature_description to week_creatures and refactor tests
+
+### Changes:
+- Added a `creature_description` entry to all 52 entries in the `week_creatures` list to support AI image generation.
+- Kept the descriptions to 2-3 sentences, mentioning that the creature is a god/entity-like guardian "watching over" its environment as if to protect it.
+- Exported the Express `app` object from `server.js` and modified the server code to only run the listener when run directly.
+- Refactored `server.test.js` to test the actual application routes directly using supertest, avoiding route logic duplication.
+- Created `.env.example` file and updated `.gitignore` to allow tracking it.
+
+### Files Changed:
+- `server.js`:
+  - Added `creature_description` to `week_creatures` list.
+  - Returned `creature_description` in `getWeekCreature(date)` payload.
+  - Conditionally started server listener and exported `app`.
+- `server.test.js`:
+  - Refactored tests to use the exported `app` object.
+  - Added assertions to verify `creature_description` values.
+- `.env.example`:
+  - Created new environment variables template.
+- `.gitignore`:
+  - Allowed tracking of `.env.example`.
+
+### Reason for Changes:
+The user requested adding creature descriptions for AI image generation, specifying that the descriptions define the creature as a god/entity-like guardian protecting its environment. Refactoring tests to use the exported Express app ensures that testing runs cleanly, avoids route logic duplication, and verifies the new data format.
