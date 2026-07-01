@@ -541,7 +541,12 @@ function buildCharacterResponse(dateObj) {
     const dayTheme = getDayTheme(dateObj);
 
     const timePegIndex = getTimePegIndex(dateObj);
+    const prevPegIndex = (timePegIndex - 1 + 96) % 96;
+    const nextPegIndex = (timePegIndex + 1) % 96;
+
     const timeCharacter = pegs[timePegIndex];
+    const prevTimeCharacter = pegs[prevPegIndex];
+    const nextTimeCharacter = pegs[nextPegIndex];
     const computedTimeStr = getComputedTimeString(timePegIndex);
 
     return {
@@ -552,6 +557,16 @@ function buildCharacterResponse(dateObj) {
             character: timeCharacter.character,
             time: timeCharacter.time,
             note: "15-minute quadrant character"
+        },
+        prevTimeCharacter: {
+            peg: prevTimeCharacter.peg,
+            character: prevTimeCharacter.character,
+            time: prevTimeCharacter.time
+        },
+        nextTimeCharacter: {
+            peg: nextTimeCharacter.peg,
+            character: nextTimeCharacter.character,
+            time: nextTimeCharacter.time
         },
         computedTime: computedTimeStr,
         currentDate: dateObj.toISOString()
