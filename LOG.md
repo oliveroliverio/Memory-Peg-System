@@ -78,3 +78,15 @@ These changes were made to ensure the Number System API is properly tested and c
 
 ### Reason for Changes:
 The user requested adding creature descriptions for AI image generation, specifying that the descriptions define the creature as a god/entity-like guardian protecting its environment. Refactoring tests to use the exported Express app ensures that testing runs cleanly, avoids route logic duplication, and verifies the new data format.
+
+## 2026-07-01: Added Prev/Next Time Characters to buildCharacterResponse
+
+### Changes:
+- Modified the character response format to return the previous and next time character metadata (`prevTimeCharacter`, `nextTimeCharacter`).
+- Calculated the surrounding indices by incrementing and decrementing the current time peg index with modular wraparound (modulo 96).
+
+### Files Changed:
+- `server.js`: Updated `buildCharacterResponse` to compute and include `prevTimeCharacter` and `nextTimeCharacter` objects in the response.
+
+### Reason for Changes:
+To allow the frontend to display adjacent time quadrant characters as visual cues/reminders to help the user build their familiarity with the number system.
