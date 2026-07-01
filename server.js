@@ -34,7 +34,7 @@ const pegs = [
     { peg: "26", character: "Bram Stoker", time: "11:30 am" },
     { peg: "27", character: "The Love BuG", time: "11:45 am" },
     { peg: "28", character: "Bishop herald", time: "12:00 pm" },
-    { peg: "29", character: "Bill nye (concocting chemical synthesis, then throwing at foe)", time: "12:15 pm" },
+    { peg: "29", character: "BilL Nye", time: "12:15 pm" },
     { peg: "30", character: "Captain obvious", time: "12:30 pm" },
     { peg: "31", character: "Captain America", time: "12:45 pm" },
     { peg: "32", character: "Carlton banks", time: "1:00 pm" },
